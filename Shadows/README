@@ -1,0 +1,22 @@
+MobBountyReloaded is a new and updated version of MobBounty.
+
+For support and help, go to: http://dev.bukkit.org/server-mods/mobbountyreloaded/
+
+Commands:
+
+Permissions:
+    shadows.*:
+        description: All Shadows permissions.
+        children:
+            shadows.disappear: true
+            shadows.immunity: true
+            shadows.see: true
+    shadows.disappear:
+        description: Allows player to disappear and reappear.
+        default: op
+    shadows.immunity:
+        description: Player won't receive damage while invisible.
+        default: op
+    shadows.see:
+        description: Player can see all vanished players.
+        default: op

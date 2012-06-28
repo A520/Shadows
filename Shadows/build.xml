@@ -1,0 +1,47 @@
+<project name="Shadows" default="package">
+    <!-- Use a default build number of zero unless a real value is passed in by Jenkins -->
+    <property environment="env"/>
+    <property name="env.BUILD_NUMBER" value="0" />
+
+    <target name="init" description="Initialize directories, etc.">
+        <mkdir dir="bin" />
+        <mkdir dir="dist" />
+    </target>
+
+    <target name="clean" depends="init" description="Clean up all the temp stuff and previous builds">
+        <delete>
+            <fileset dir="bin" />
+            <fileset dir="dist" />
+        </delete>
+    </target>
+
+    <target name="compile" depends="clean, init" description="Compile all the code">
+        <javac debug="true" debuglevel="lines,vars,source" deprecation="true" srcdir="src" destdir="bin">
+            <classpath>
+                <fileset dir="lib" includes="*.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="package" depends="compile" description="Make the distributable jar file">
+        <copy todir="bin" overwrite="true">
+            <fileset dir="." includes="plugin.yml" />
+            <!-- 
+            This filterset tells Ant to replace @VERSION@ in the yml file with whatever is in the property env.BUILD_NUMBER, which Jenkins passes in 
+            -->
+            <filterset>
+                <filter token="VERSION" value="${env.BUILD_NUMBER}" />
+            </filterset>
+        </copy>
+        <jar basedir="bin" jarfile="dist/${ant.project.name}.jar" defaultexcludes="true" />
+    </target>
+
+    <target name="test-topple" depends="package" description="For Topple's testing convenience">
+        <copy file="dist/${ant.project.name}.jar" todir="C:/Users/owner/Desktop/For Clean Test/plugins" />
+        <exec dir="C:/Users/owner/Desktop/For Clean Test" executable="cmd" os="Windows 7">
+            <arg line="/c RUN.bat" />
+        </exec>
+    </target>
+    
+
+</project>

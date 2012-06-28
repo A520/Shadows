@@ -1,0 +1,23 @@
+name: Shadows
+main: info.hawksharbor.Shadows.Shadows
+version: @VERSION@
+author: ToppleTheNun
+description: Dynamic vanishing - never before seen!
+
+commands:
+permissions:
+    shadows.*:
+        description: All Shadows permissions.
+        children:
+            shadows.disappear: true
+            shadows.immunity: true
+            shadows.see: true
+    shadows.disappear:
+        description: Allows player to disappear and reappear.
+        default: true
+    shadows.immunity:
+        description: Player won't receive damage while invisible.
+        default: op
+    shadows.see:
+        description: Player can see all vanished players.
+        default: op
