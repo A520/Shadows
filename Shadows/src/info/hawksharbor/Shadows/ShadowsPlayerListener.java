@@ -1,5 +1,7 @@
 package info.hawksharbor.Shadows;
 
+import info.hawksharbor.Shadows.util.ShadowsAPI;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -32,7 +34,7 @@ public class ShadowsPlayerListener implements Listener
 	{
 		String playerName = player.getName();
 		Server server = Bukkit.getServer();
-		if (Shadows.getVanished().contains(playerName))
+		if (ShadowsAPI.getVanished().contains(playerName))
 		{
 			vanishPlayer(player);
 		}
@@ -46,9 +48,9 @@ public class ShadowsPlayerListener implements Listener
 				}
 			}
 		}
-		if (!player.hasPermission("shadows.see"))
+		if (!ShadowsAPI.hasPermission(player, "shadows.admin.see"))
 		{
-			for (String name : Shadows.getVanished())
+			for (String name : ShadowsAPI.getVanished())
 			{
 				if (name.equals(playerName))
 					continue;
@@ -64,7 +66,7 @@ public class ShadowsPlayerListener implements Listener
 		}
 		else
 		{
-			for (String name : Shadows.getVanished())
+			for (String name : ShadowsAPI.getVanished())
 			{
 				if (name.equals(playerName))
 					continue;
@@ -82,23 +84,24 @@ public class ShadowsPlayerListener implements Listener
 
 	private void vanishPlayer(Player p)
 	{
-		Shadows.addVanished(p.getName());
-		Shadows.remSVM(p.getName());
+		ShadowsAPI.addVanished(p.getName());
+		ShadowsAPI.remSVM(p.getName());
 		for (Player other : Bukkit.getServer().getOnlinePlayers())
 		{
 			if (!other.equals(p) && other.canSee(p))
 			{
-				if (!other.hasPermission("shadows.see"))
+				if (!ShadowsAPI.hasPermission(other, "shadows.admin.see"))
 				{
 					other.hidePlayer(p);
 				}
 			}
 		}
-		if (!Shadows.getSentInvMsg().contains(p.getName()))
+		if (!ShadowsAPI.getSentInvMsg().contains(p.getName()))
 		{
-			p.sendMessage(ChatColor.DARK_GRAY + "[Shadows] " + ChatColor.GRAY
-					+ "You are now invisible.");
-			Shadows.addSIM(p.getName());
+			String message = ShadowsAPI.getLocaleManager().getString("Vanish");
+			if (message != null)
+				p.sendMessage(ChatColor.DARK_GRAY + "[Shadows] " + message);
+			ShadowsAPI.addSIM(p.getName());
 		}
 		return;
 	}
@@ -114,26 +117,19 @@ public class ShadowsPlayerListener implements Listener
 			return;
 		}
 		Player pl = ((Player) damager);
-		if (pl.hasPermission("shadows.sneakattack.invisible")
-				|| pl.hasPermission("shadows.sneakattack.visible"))
-		{
-			int dam = event.getDamage();
-			event.setDamage(dam *= 2);
-			if (pl.hasPermission("shadows.sneakattack.invisible"))
-				return;
-		}
 		damagerName = pl.getName();
 		long dTime = System.currentTimeMillis();
-		Shadows.addVD(damagerName, dTime);
-		if (!Shadows.getSentDmgMsg().contains(damagerName)
-				&& Shadows.getVanished().contains(damagerName))
+		ShadowsAPI.addVD(damagerName, dTime);
+		if (!ShadowsAPI.getSentDmgMsg().contains(damagerName)
+				&& ShadowsAPI.getVanished().contains(damagerName))
 		{
-			((Player) damager).sendMessage(ChatColor.DARK_GRAY + "[Shadows] "
-					+ ChatColor.GRAY + "You have been revealed.");
-			Shadows.addSDM(damagerName);
+			String message = ShadowsAPI.getLocaleManager().getString("Reveal");
+			if (message != null)
+				pl.sendMessage(ChatColor.DARK_GRAY + "[Shadows] " + message);
+			ShadowsAPI.addSDM(damagerName);
 		}
-		Shadows.remVanished(damagerName);
-		Shadows.remSIM(damagerName);
+		ShadowsAPI.remVanished(damagerName);
+		ShadowsAPI.remSIM(damagerName);
 		for (Player other : Bukkit.getServer().getOnlinePlayers())
 		{
 			if (!other.equals(damagerName) && !other.canSee((Player) damager))
@@ -153,22 +149,23 @@ public class ShadowsPlayerListener implements Listener
 			return;
 		}
 		Player p = (Player) ent;
-		if (p.hasPermission("shadows.immunity"))
+		if (ShadowsAPI.hasPermission(p, "shadows.admin.immunity"))
 		{
 			event.setCancelled(true);
 		}
 		String pn = p.getName();
-		if (!Shadows.getSentDmgMsg().contains(pn)
-				&& Shadows.getVanished().contains(pn))
+		if (!ShadowsAPI.getSentDmgMsg().contains(pn)
+				&& ShadowsAPI.getVanished().contains(pn))
 		{
-			p.sendMessage(ChatColor.DARK_GRAY + "[Shadows] " + ChatColor.GRAY
-					+ "You have been revealed.");
-			Shadows.addSDM(pn);
-			Shadows.remVanished(pn);
+			String message = ShadowsAPI.getLocaleManager().getString("Reveal");
+			if (message != null)
+				p.sendMessage(ChatColor.DARK_GRAY + "[Shadows] " + message);
+			ShadowsAPI.addSDM(pn);
+			ShadowsAPI.remVanished(pn);
 		}
 		long dTime = System.currentTimeMillis();
-		Shadows.addVD(pn, dTime);
-		Shadows.remSIM(pn);
+		ShadowsAPI.addVD(pn, dTime);
+		ShadowsAPI.remSIM(pn);
 		for (Player other : Bukkit.getServer().getOnlinePlayers())
 		{
 			if (!other.equals(p) && !other.canSee(p))
@@ -190,7 +187,7 @@ public class ShadowsPlayerListener implements Listener
 		if (target instanceof Player)
 		{
 			String playerName = ((Player) target).getName();
-			if (Shadows.getVanished().contains(playerName))
+			if (ShadowsAPI.getVanished().contains(playerName))
 			{
 				event.setCancelled(true);
 			}
