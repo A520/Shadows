@@ -151,7 +151,7 @@ public class ShadowsConfigs
 			localeConf.set("en.Vanish", "&7You have become invisible.");
 			localeConf.set("en.Reveal", "&7You have been revealed.");
 			localeConf.set("en.Appear", "&7You are no longer invisible.");
-			localeConf.set("en.Help", "&7%C &7- %D");
+			localeConf.set("en.Help", "&7%C &8-&7 %D");
 			localeConf.set("en.Unable", "&7You are unable to do that.");
 			localeConf.set("en.Change", "&F%O &7was changed to &f%N");
 			localeConf.set("en.Info", "&7Debug: %D / Verbose: %V / Vanish: %I");
