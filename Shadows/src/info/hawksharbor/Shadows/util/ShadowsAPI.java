@@ -2,6 +2,14 @@ package info.hawksharbor.Shadows.util;
 
 import info.hawksharbor.Shadows.Shadows;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -232,6 +240,88 @@ public class ShadowsAPI
 	{
 		getConfigManager().setProperty(ShadowsConfFile.SETTINGS, "debugMode",
 				Boolean.parseBoolean(s));
+	}
+
+	public void checkNewBuild()
+	{
+		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
+				"alertNewDevBuild");
+		if (alert != null && alert.equalsIgnoreCase("true"))
+		{
+			checkForNewUpdate();
+		}
+	}
+
+	private void checkForNewUpdate()
+	{
+		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
+				"alertNewDevBuild");
+		if (alert == null)
+		{
+			return;
+		}
+		if (!alert.equalsIgnoreCase("true"))
+		{
+			return;
+		}
+		Shadows.latestVersion = true;
+		String rawVersion = fetchDevBuildVersion();
+		int start = rawVersion.indexOf(">") + 1;
+		int end = rawVersion.indexOf("<", start);
+		String cookedVersion = rawVersion.substring(start, end);
+		if (!cookedVersion.equalsIgnoreCase(Shadows.v))
+		{
+			ShadowsAPI
+					.getChatty()
+					.logInfo(
+							"New version available at https://topplethenun.ci.cloudbees.com/job/Shadows/");
+			Shadows.latestVersion = false;
+		}
+	}
+
+	private String fetchDevBuildVersion()
+	{
+		BufferedReader in = null;
+		Writer writer = new StringWriter();
+		try
+		{
+			URL oracle = new URL(
+					"https://topplethenun.ci.cloudbees.com/job/Shadows/lastSuccessfulBuild/api/xml?xpath=freeStyleBuild/number");
+			in = new BufferedReader(new InputStreamReader(oracle.openStream(),
+					"UTF-8"));
+
+			char[] buffer = new char[1024];
+			int n;
+			while ((n = in.read(buffer)) != -1)
+			{
+				writer.write(buffer, 0, n);
+			}
+
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+		catch (UnknownHostException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				in.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return writer.toString();
 	}
 
 }

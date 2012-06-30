@@ -137,6 +137,10 @@ public class ShadowsCommand implements CommandExecutor
 				{
 					test = 5;
 				}
+				if (test > 15)
+					test = 15;
+				else if (test < 0)
+					test = 0;
 				ShadowsAPI.setVanishLightLevel(test);
 				String message = ShadowsAPI.getLocaleManager().getString(
 						"Change");

@@ -19,6 +19,7 @@ Permissions:
             shadows.admin.immunity: true
             shadows.admin.see: true
             shadows.admin.info: true
+            shadows.admin.alert: true
     shadows.user.*:
         description: User Shadows permissions.
         children:
@@ -35,6 +36,7 @@ Permissions:
             shadows.admin.immunity: true
             shadows.admin.see: true
             shadows.admin.info: true
+            shadows.admin.alert: true
     shadows.user.disappear:
         description: Allows player to disappear and reappear.
         default: op
@@ -46,6 +48,7 @@ Permissions:
         default: op
     shadows.command.light:
         description: Allows player to use the shadows light subcommand.
+        default: op
     shadows.admin.immunity:
         description: Player won't receive damage while invisible.
         default: op
@@ -54,4 +57,7 @@ Permissions:
         default: op
     shadows.admin.info:
         description: Player can see info with shadows command.
+        default: op
+    shadows.admin.alert:
+        description: Player can see alerts for new dev builds.
         default: op
