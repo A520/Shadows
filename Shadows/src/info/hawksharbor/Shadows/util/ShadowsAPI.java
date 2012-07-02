@@ -23,6 +23,7 @@ public class ShadowsAPI
 	private static ShadowsChatty chatty;
 	private static ShadowsConfigs confManager;
 	private static ShadowsLocale localeManager;
+	private static boolean latestVersion;
 
 	public ShadowsAPI(Shadows shad)
 	{
@@ -242,7 +243,7 @@ public class ShadowsAPI
 				Boolean.parseBoolean(s));
 	}
 
-	public void checkNewBuild()
+	public static void checkNewBuild()
 	{
 		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
 				"alertNewDevBuild");
@@ -252,11 +253,11 @@ public class ShadowsAPI
 		}
 	}
 
-	private void checkForNewUpdate()
+	private static void checkForNewUpdate()
 	{
 		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
 				"alertNewDevBuild");
-		if (alert == null)
+		if (alert == null || (alert != null && !alert.equalsIgnoreCase("true")))
 		{
 			return;
 		}
@@ -264,7 +265,7 @@ public class ShadowsAPI
 		{
 			return;
 		}
-		Shadows.latestVersion = true;
+		latestVersion = true;
 		String rawVersion = fetchDevBuildVersion();
 		int start = rawVersion.indexOf(">") + 1;
 		int end = rawVersion.indexOf("<", start);
@@ -275,11 +276,11 @@ public class ShadowsAPI
 					.getChatty()
 					.logInfo(
 							"New version available at https://topplethenun.ci.cloudbees.com/job/Shadows/");
-			Shadows.latestVersion = false;
+			latestVersion = false;
 		}
 	}
 
-	private String fetchDevBuildVersion()
+	private static String fetchDevBuildVersion()
 	{
 		BufferedReader in = null;
 		Writer writer = new StringWriter();
@@ -322,6 +323,12 @@ public class ShadowsAPI
 			}
 		}
 		return writer.toString();
+	}
+
+	public static boolean isLatestVersion()
+	{
+		checkNewBuild();
+		return latestVersion;
 	}
 
 }

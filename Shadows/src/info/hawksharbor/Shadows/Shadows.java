@@ -16,7 +16,6 @@ public class Shadows extends JavaPlugin
 	public static ArrayList<String> sentDamagedMessage = new ArrayList<String>();
 	public static HashMap<String, Long> vDamaged = new HashMap<String, Long>();
 	public static String v;
-	public static boolean latestVersion;
 
 	private ShadowsAPI apiManager;
 	private ShadowsCommand shadEx;

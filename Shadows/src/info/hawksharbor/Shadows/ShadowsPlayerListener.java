@@ -30,7 +30,7 @@ public class ShadowsPlayerListener implements Listener
 	{
 		updateVanishState(event.getPlayer());
 		if (ShadowsAPI.hasPermission(event.getPlayer(), "shadows.admin.alert")
-				&& !Shadows.latestVersion)
+				&& !ShadowsAPI.isLatestVersion())
 		{
 			if (Boolean.parseBoolean(ShadowsAPI.getConfigManager().getProperty(
 					ShadowsConfFile.SETTINGS, "alertNewDevBuild")))
