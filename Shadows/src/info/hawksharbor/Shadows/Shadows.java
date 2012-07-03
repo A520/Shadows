@@ -3,6 +3,7 @@ package info.hawksharbor.Shadows;
 import info.hawksharbor.Shadows.commands.ShadowsCommand;
 import info.hawksharbor.Shadows.util.ShadowsAPI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,7 +36,22 @@ public class Shadows extends JavaPlugin
 		new ShadowsPlayerListener(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this,
 				new ShadowsRunnable(this), 0, 1);
+		startStatistics();
 		ShadowsAPI.getChatty().logInfo("v" + v + " enabled.");
+	}
+
+	private void startStatistics()
+	{
+		try
+		{
+			MetricsLite metrics = new MetricsLite(this);
+			metrics.start();
+		}
+		catch (IOException e)
+		{
+			ShadowsAPI.getChatty().logSevere(
+					"There was an error while submitting statistics.");
+		}
 	}
 
 	@Override
