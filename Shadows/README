@@ -1,6 +1,6 @@
-MobBountyReloaded is a new and updated version of MobBounty.
+Shadows aims to introduce a new mechanic to Minecraft - dynamic vanishing.
 
-For support and help, go to: http://dev.bukkit.org/server-mods/mobbountyreloaded/
+For support and help, go to: http://dev.bukkit.org/server-mods/shadows/
 
 Commands:
     shadows:
@@ -16,6 +16,8 @@ Permissions:
             shadows.command.verbose: true
             shadows.command.debug: true
             shadows.command.light: true
+            shadows.command.locale: true
+            shadows.command.alert: true
             shadows.admin.immunity: true
             shadows.admin.see: true
             shadows.admin.info: true
@@ -30,6 +32,8 @@ Permissions:
             shadows.command.verbose: true
             shadows.command.debug: true
             shadows.command.light: true
+            shadows.command.locale: true
+            shadows.command.alert: true
     shadows.admin.*:
         description: Admin permissions.
         children:
@@ -48,6 +52,12 @@ Permissions:
         default: op
     shadows.command.light:
         description: Allows player to use the shadows light subcommand.
+        default: op
+    shadows.command.locale:
+        description: Allows player to use the shadows locale subcommand.
+        default: op
+    shadows.command.alert:
+        description: Allows player to use the shadows alert subcommand.
         default: op
     shadows.admin.immunity:
         description: Player won't receive damage while invisible.
