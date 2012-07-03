@@ -243,6 +243,37 @@ public class ShadowsAPI
 				Boolean.parseBoolean(s));
 	}
 
+	public static String getLocale()
+	{
+		return getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
+				"locale");
+	}
+
+	public static void setLocale(String string)
+	{
+		getConfigManager().setProperty(ShadowsConfFile.SETTINGS, "locale",
+				string);
+	}
+
+	public static boolean getAlertNewDevBuild()
+	{
+		String s = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
+				"alertNewDevBuild");
+		return Boolean.parseBoolean(s);
+	}
+
+	public static void setAlertNewDevBuild(String s)
+	{
+		getConfigManager().setProperty(ShadowsConfFile.SETTINGS,
+				"alertNewDevBuild", Boolean.parseBoolean(s));
+	}
+
+	public static void setAlertNewDevBuild(boolean b)
+	{
+		getConfigManager().setProperty(ShadowsConfFile.SETTINGS,
+				"alertNewDevBuild", b);
+	}
+
 	public static void checkNewBuild()
 	{
 		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,

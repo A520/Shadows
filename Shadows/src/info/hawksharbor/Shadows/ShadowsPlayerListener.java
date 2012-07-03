@@ -110,7 +110,8 @@ public class ShadowsPlayerListener implements Listener
 				}
 			}
 		}
-		if (!ShadowsAPI.getSentInvMsg().contains(p.getName()))
+		if (!ShadowsAPI.getSentInvMsg().contains(p.getName())
+				&& ShadowsAPI.getVerboseMode())
 		{
 			String message = ShadowsAPI.getLocaleManager().getString("Vanish");
 			if (message != null)
@@ -135,7 +136,8 @@ public class ShadowsPlayerListener implements Listener
 		long dTime = System.currentTimeMillis();
 		ShadowsAPI.addVD(damagerName, dTime);
 		if (!ShadowsAPI.getSentDmgMsg().contains(damagerName)
-				&& ShadowsAPI.getVanished().contains(damagerName))
+				&& ShadowsAPI.getVanished().contains(damagerName)
+				&& ShadowsAPI.getVerboseMode())
 		{
 			String message = ShadowsAPI.getLocaleManager().getString("Reveal");
 			if (message != null)
@@ -169,7 +171,8 @@ public class ShadowsPlayerListener implements Listener
 		}
 		String pn = p.getName();
 		if (!ShadowsAPI.getSentDmgMsg().contains(pn)
-				&& ShadowsAPI.getVanished().contains(pn))
+				&& ShadowsAPI.getVanished().contains(pn)
+				&& ShadowsAPI.getVerboseMode())
 		{
 			String message = ShadowsAPI.getLocaleManager().getString("Reveal");
 			if (message != null)
@@ -193,10 +196,6 @@ public class ShadowsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityTarget(EntityTargetEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		Entity target = event.getTarget();
 		if (target instanceof Player)
 		{
@@ -204,6 +203,7 @@ public class ShadowsPlayerListener implements Listener
 			if (ShadowsAPI.getVanished().contains(playerName))
 			{
 				event.setCancelled(true);
+				event.setTarget(null);
 			}
 		}
 	}

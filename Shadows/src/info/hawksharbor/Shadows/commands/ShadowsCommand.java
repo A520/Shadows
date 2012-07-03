@@ -70,6 +70,24 @@ public class ShadowsCommand implements CommandExecutor
 							"/shadows light <0-15>").replace("%D",
 							"Changes vanishLightLevel"));
 			}
+			if (ShadowsAPI.hasPermission(sender, "shadows.command.locale"))
+			{
+				String message = ShadowsAPI.getLocaleManager()
+						.getString("Help");
+				if (message != null)
+					sender.sendMessage(message.replace("%C",
+							"/shadows locale [name]").replace("%D",
+							"Changes locale"));
+			}
+			if (ShadowsAPI.hasPermission(sender, "shadows.command.alert"))
+			{
+				String message = ShadowsAPI.getLocaleManager()
+						.getString("Help");
+				if (message != null)
+					sender.sendMessage(message.replace("%C",
+							"/shadows alert <true|false>").replace("%D",
+							"Changes alertNewDevBuild"));
+			}
 			sender.sendMessage(ChatColor.DARK_GRAY + "--------------------");
 			return true;
 		case 2:
@@ -118,6 +136,28 @@ public class ShadowsCommand implements CommandExecutor
 									String.valueOf(b)));
 				return true;
 			}
+			else if (args[0].equalsIgnoreCase("alert"))
+			{
+				if (!ShadowsAPI.hasPermission(sender, "shadows.command.alert"))
+				{
+					String message = ShadowsAPI.getLocaleManager().getString(
+							"Unable");
+					if (message != null)
+						sender.sendMessage(ChatColor.DARK_GRAY + "[Shadows] "
+								+ message);
+				}
+				String booleanTest = args[1];
+				boolean b = Boolean.parseBoolean(booleanTest);
+				ShadowsAPI.setAlertNewDevBuild(b);
+				String message = ShadowsAPI.getLocaleManager().getString(
+						"Change");
+				if (message != null)
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "[Shadows] "
+							+ message.replace("%O", "alertNewDevBuild")
+									.replace("%N", String.valueOf(b)));
+				return true;
+			}
 			else if (args[0].equalsIgnoreCase("light"))
 			{
 				if (!ShadowsAPI.hasPermission(sender, "shadows.command.light"))
@@ -151,6 +191,26 @@ public class ShadowsCommand implements CommandExecutor
 							+ message.replace("%O", "vanishLightLevel")
 									.replace("%N", String.valueOf(test)));
 				return true;
+			}
+			else if (args[0].equalsIgnoreCase("locale"))
+			{
+				if (!ShadowsAPI.hasPermission(sender, "shadows.command.locale"))
+				{
+					String message = ShadowsAPI.getLocaleManager().getString(
+							"Unable");
+					if (message != null)
+						sender.sendMessage(ChatColor.DARK_GRAY + "[Shadows] "
+								+ message);
+					return true;
+				}
+				ShadowsAPI.setLocale(args[1]);
+				String message = ShadowsAPI.getLocaleManager().getString(
+						"Change");
+				if (message != null)
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "[Shadows] "
+							+ message.replace("%O", "locale").replace("%N",
+									args[1]));
 			}
 		default:
 			String message = ShadowsAPI.getLocaleManager().getString("Unable");

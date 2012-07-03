@@ -73,7 +73,8 @@ public class ShadowsRunnable implements Runnable
 				other.showPlayer(p);
 			}
 		}
-		if (!ShadowsAPI.getSentVisMsg().contains(p.getName()))
+		if (!ShadowsAPI.getSentVisMsg().contains(p.getName())
+				&& ShadowsAPI.getVerboseMode())
 		{
 			String message = ShadowsAPI.getLocaleManager().getString("Appear");
 			if (message != null)
@@ -97,7 +98,8 @@ public class ShadowsRunnable implements Runnable
 				}
 			}
 		}
-		if (!ShadowsAPI.getSentInvMsg().contains(p.getName()))
+		if (!ShadowsAPI.getSentInvMsg().contains(p.getName())
+				&& ShadowsAPI.getVerboseMode())
 		{
 			String message = ShadowsAPI.getLocaleManager().getString("Vanish");
 			if (message != null)
