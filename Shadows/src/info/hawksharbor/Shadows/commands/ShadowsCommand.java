@@ -28,7 +28,7 @@ public class ShadowsCommand implements CommandExecutor
 		{
 		case 0:
 			sender.sendMessage(ChatColor.DARK_GRAY + "--------------------");
-			sender.sendMessage(ChatColor.DARK_GRAY + "-----" + ChatColor.GRAY
+			sender.sendMessage(ChatColor.DARK_GRAY + "------" + ChatColor.GRAY
 					+ "Shadows" + ChatColor.DARK_GRAY + "------");
 			if (ShadowsAPI.hasPermission(sender, "shadows.admin.info"))
 			{
@@ -38,7 +38,8 @@ public class ShadowsCommand implements CommandExecutor
 						.getVanishLightLevel());
 				String message = ShadowsAPI.getLocaleManager()
 						.getString("Info");
-				sender.sendMessage("- "
+				sender.sendMessage(ChatColor.DARK_GRAY
+						+ "- "
 						+ message.replace("%D", debug).replace("%V", verbose)
 								.replace("%I", vanishLevel));
 			}
@@ -48,7 +49,7 @@ public class ShadowsCommand implements CommandExecutor
 						.getString("Help");
 				if (message != null)
 					sender.sendMessage(message.replace("%C",
-							"shadows verbose <true|false>").replace("%D",
+							"/shadows verbose <true|false>").replace("%D",
 							"Changes verboseMode"));
 			}
 			if (ShadowsAPI.hasPermission(sender, "shadows.command.debug"))
@@ -57,7 +58,7 @@ public class ShadowsCommand implements CommandExecutor
 						.getString("Help");
 				if (message != null)
 					sender.sendMessage(message.replace("%C",
-							"shadows debug <true|false>").replace("%D",
+							"/shadows debug <true|false>").replace("%D",
 							"Changes debugMode"));
 			}
 			if (ShadowsAPI.hasPermission(sender, "shadows.command.light"))
@@ -66,7 +67,7 @@ public class ShadowsCommand implements CommandExecutor
 						.getString("Help");
 				if (message != null)
 					sender.sendMessage(message.replace("%C",
-							"shadows light <0-15>").replace("%D",
+							"/shadows light <0-15>").replace("%D",
 							"Changes vanishLightLevel"));
 			}
 			sender.sendMessage(ChatColor.DARK_GRAY + "--------------------");
