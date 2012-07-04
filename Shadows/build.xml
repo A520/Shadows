@@ -33,7 +33,7 @@
                 <filter token="VERSION" value="${env.BUILD_NUMBER}" />
             </filterset>
         </copy>
-        <jar basedir="bin" jarfile="dist/${ant.project.name}.jar" defaultexcludes="true" />
+        <jar basedir="bin" jarfile="dist/${ant.project.name}_v${env.BUILD_NUMBER}.jar" defaultexcludes="true" />
     </target>
 
     <target name="test-topple" depends="package" description="For Topple's testing convenience">
