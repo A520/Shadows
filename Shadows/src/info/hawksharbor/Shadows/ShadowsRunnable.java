@@ -33,13 +33,13 @@ public class ShadowsRunnable implements Runnable
 			{
 				return;
 			}
-			if (b.getLightLevel() <= 5
+			if (b.getLightLevel() <= ShadowsAPI.getVanishLightLevel()
 					&& !ShadowsAPI.getVanished().contains(pn)
 					&& !ShadowsAPI.getVanishDamaged().containsKey(pn))
 			{
 				vanishPlayer(pl);
 			}
-			else if (b.getLightLevel() > 5
+			else if (b.getLightLevel() > ShadowsAPI.getVanishLightLevel()
 					&& ShadowsAPI.getVanished().contains(pn))
 			{
 				reappearPlayer(pl);
@@ -52,7 +52,7 @@ public class ShadowsRunnable implements Runnable
 				{
 					ShadowsAPI.remVD(pn);
 					ShadowsAPI.remSDM(pn);
-					if (b.getLightLevel() <= 5)
+					if (b.getLightLevel() <= ShadowsAPI.getVanishLightLevel())
 					{
 						vanishPlayer(pl);
 					}
