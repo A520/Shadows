@@ -131,7 +131,6 @@ public class ShadowsConfigs
 			YamlConfiguration settingsConf = YamlConfiguration
 					.loadConfiguration(file);
 			settingsConf.set("locale", "en");
-			settingsConf.set("alertNewDevBuild", false);
 			settingsConf.set("vanishLightLevel", new Integer(5));
 			settingsConf.set("verboseMode", true);
 			settingsConf.set("debugMode", false);

@@ -79,15 +79,6 @@ public class ShadowsCommand implements CommandExecutor
 							"/shadows locale [name]").replace("%D",
 							"Changes locale"));
 			}
-			if (ShadowsAPI.hasPermission(sender, "shadows.command.alert"))
-			{
-				String message = ShadowsAPI.getLocaleManager()
-						.getString("Help");
-				if (message != null)
-					sender.sendMessage(message.replace("%C",
-							"/shadows alert <true|false>").replace("%D",
-							"Changes alertNewDevBuild"));
-			}
 			sender.sendMessage(ChatColor.DARK_GRAY + "--------------------");
 			return true;
 		case 2:
@@ -134,28 +125,6 @@ public class ShadowsCommand implements CommandExecutor
 							+ "[Shadows] "
 							+ message.replace("%O", "debugMode").replace("%N",
 									String.valueOf(b)));
-				return true;
-			}
-			else if (args[0].equalsIgnoreCase("alert"))
-			{
-				if (!ShadowsAPI.hasPermission(sender, "shadows.command.alert"))
-				{
-					String message = ShadowsAPI.getLocaleManager().getString(
-							"Unable");
-					if (message != null)
-						sender.sendMessage(ChatColor.DARK_GRAY + "[Shadows] "
-								+ message);
-				}
-				String booleanTest = args[1];
-				boolean b = Boolean.parseBoolean(booleanTest);
-				ShadowsAPI.setAlertNewDevBuild(b);
-				String message = ShadowsAPI.getLocaleManager().getString(
-						"Change");
-				if (message != null)
-					sender.sendMessage(ChatColor.DARK_GRAY
-							+ "[Shadows] "
-							+ message.replace("%O", "alertNewDevBuild")
-									.replace("%N", String.valueOf(b)));
 				return true;
 			}
 			else if (args[0].equalsIgnoreCase("light"))

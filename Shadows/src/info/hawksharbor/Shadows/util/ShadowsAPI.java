@@ -2,14 +2,6 @@ package info.hawksharbor.Shadows.util;
 
 import info.hawksharbor.Shadows.Shadows;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +15,6 @@ public class ShadowsAPI
 	private static ShadowsChatty chatty;
 	private static ShadowsConfigs confManager;
 	private static ShadowsLocale localeManager;
-	private static boolean latestVersion;
 
 	public ShadowsAPI(Shadows shad)
 	{
@@ -253,113 +244,6 @@ public class ShadowsAPI
 	{
 		getConfigManager().setProperty(ShadowsConfFile.SETTINGS, "locale",
 				string);
-	}
-
-	public static boolean getAlertNewDevBuild()
-	{
-		String s = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
-				"alertNewDevBuild");
-		return Boolean.parseBoolean(s);
-	}
-
-	public static void setAlertNewDevBuild(String s)
-	{
-		getConfigManager().setProperty(ShadowsConfFile.SETTINGS,
-				"alertNewDevBuild", Boolean.parseBoolean(s));
-	}
-
-	public static void setAlertNewDevBuild(boolean b)
-	{
-		getConfigManager().setProperty(ShadowsConfFile.SETTINGS,
-				"alertNewDevBuild", b);
-	}
-
-	public static void checkNewBuild()
-	{
-		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
-				"alertNewDevBuild");
-		if (alert != null && alert.equalsIgnoreCase("true"))
-		{
-			checkForNewUpdate();
-		}
-	}
-
-	private static void checkForNewUpdate()
-	{
-		String alert = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
-				"alertNewDevBuild");
-		if (alert == null || (alert != null && !alert.equalsIgnoreCase("true")))
-		{
-			return;
-		}
-		if (!alert.equalsIgnoreCase("true"))
-		{
-			return;
-		}
-		latestVersion = true;
-		String rawVersion = fetchDevBuildVersion();
-		int start = rawVersion.indexOf(">") + 1;
-		int end = rawVersion.indexOf("<", start);
-		String cookedVersion = rawVersion.substring(start, end);
-		if (!cookedVersion.equalsIgnoreCase(Shadows.v))
-		{
-			ShadowsAPI
-					.getChatty()
-					.logInfo(
-							"New version available at https://topplethenun.ci.cloudbees.com/job/Shadows/");
-			latestVersion = false;
-		}
-	}
-
-	private static String fetchDevBuildVersion()
-	{
-		BufferedReader in = null;
-		Writer writer = new StringWriter();
-		try
-		{
-			URL oracle = new URL(
-					"https://topplethenun.ci.cloudbees.com/job/Shadows/lastSuccessfulBuild/api/xml?xpath=freeStyleBuild/number");
-			in = new BufferedReader(new InputStreamReader(oracle.openStream(),
-					"UTF-8"));
-
-			char[] buffer = new char[1024];
-			int n;
-			while ((n = in.read(buffer)) != -1)
-			{
-				writer.write(buffer, 0, n);
-			}
-
-		}
-		catch (MalformedURLException e)
-		{
-			e.printStackTrace();
-		}
-		catch (UnknownHostException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				in.close();
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		return writer.toString();
-	}
-
-	public static boolean isLatestVersion()
-	{
-		checkNewBuild();
-		return latestVersion;
 	}
 
 }

@@ -1,7 +1,6 @@
 package info.hawksharbor.Shadows;
 
 import info.hawksharbor.Shadows.util.ShadowsAPI;
-import info.hawksharbor.Shadows.util.ShadowsConfFile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -29,19 +28,6 @@ public class ShadowsPlayerListener implements Listener
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		updateVanishState(event.getPlayer());
-		if (ShadowsAPI.hasPermission(event.getPlayer(), "shadows.admin.alert")
-				&& !ShadowsAPI.isLatestVersion())
-		{
-			if (Boolean.parseBoolean(ShadowsAPI.getConfigManager().getProperty(
-					ShadowsConfFile.SETTINGS, "alertNewDevBuild")))
-			{
-				String message = ShadowsAPI.getLocaleManager().getString(
-						"NewVersionAvailable");
-				if (message != null)
-					event.getPlayer().sendMessage(
-							ChatColor.DARK_GRAY + "[Shadows] " + message);
-			}
-		}
 	}
 
 	private void updateVanishState(Player player)
@@ -200,7 +186,8 @@ public class ShadowsPlayerListener implements Listener
 		if (target instanceof Player)
 		{
 			String playerName = ((Player) target).getName();
-			if (ShadowsAPI.getVanished().contains(playerName))
+			if (ShadowsAPI.getVanished().contains(playerName)
+					|| ShadowsAPI.getVanishDamaged().containsKey(playerName))
 			{
 				event.setCancelled(true);
 				event.setTarget(null);

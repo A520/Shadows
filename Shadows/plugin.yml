@@ -18,11 +18,9 @@ permissions:
             shadows.command.debug: true
             shadows.command.light: true
             shadows.command.locale: true
-            shadows.command.alert: true
             shadows.admin.immunity: true
             shadows.admin.see: true
             shadows.admin.info: true
-            shadows.admin.alert: true
     shadows.user.*:
         description: User Shadows permissions.
         children:
@@ -34,14 +32,12 @@ permissions:
             shadows.command.debug: true
             shadows.command.light: true
             shadows.command.locale: true
-            shadows.command.alert: true
     shadows.admin.*:
         description: Admin permissions.
         children:
             shadows.admin.immunity: true
             shadows.admin.see: true
             shadows.admin.info: true
-            shadows.admin.alert: true
     shadows.user.disappear:
         description: Allows player to disappear and reappear.
         default: op
