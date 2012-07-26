@@ -246,4 +246,11 @@ public class ShadowsAPI
 				string);
 	}
 
+	public static boolean getSneakReq()
+	{
+		String mode = getConfigManager().getProperty(ShadowsConfFile.SETTINGS,
+				"vanishOnlyWhileSneaking");
+		return Boolean.parseBoolean(mode);
+	}
+
 }

@@ -133,6 +133,7 @@ public class ShadowsConfigs
 			settingsConf.set("locale", "en");
 			settingsConf.set("vanishLightLevel", new Integer(5));
 			settingsConf.set("verboseMode", true);
+			settingsConf.set("vanishOnlyWhileSneaking", false);
 			settingsConf.set("debugMode", false);
 			try
 			{

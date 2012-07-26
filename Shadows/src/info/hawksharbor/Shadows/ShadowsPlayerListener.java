@@ -34,6 +34,10 @@ public class ShadowsPlayerListener implements Listener
 	{
 		String playerName = player.getName();
 		Server server = Bukkit.getServer();
+		if (ShadowsAPI.getSneakReq() && !player.isSneaking())
+		{
+			return;
+		}
 		if (ShadowsAPI.getVanished().contains(playerName))
 		{
 			vanishPlayer(player);
